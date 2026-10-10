@@ -1,0 +1,4 @@
+.env
+/traefik-cloudflare-dns
+*.test
+*.out
