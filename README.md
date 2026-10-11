@@ -23,6 +23,8 @@ A typical setup is one wildcard record (`*.example.com`) for your main server, p
 
 ## Quick start
 
+The repo's [`compose.yml`](compose.yml) is ready to deploy as is, for example as a Docker Compose app in Coolify on each server. Copy [`.env.example`](.env.example) to `.env` and fill in the four required values. The minimal form is:
+
 ```yaml
 services:
   traefik-cloudflare-dns:

@@ -1,0 +1,30 @@
+services:
+  traefik-cloudflare-dns:
+    image: ghcr.io/tiennm99/traefik-cloudflare-dns:edge
+    restart: unless-stopped
+    environment:
+      - CF_API_TOKEN=${CF_API_TOKEN:?CF_API_TOKEN is required}
+      - CF_ZONE_ID=${CF_ZONE_ID:?CF_ZONE_ID is required}
+      - DOMAIN=${DOMAIN:?DOMAIN is required}
+      - TARGET=${TARGET:?TARGET is required}
+      - DOCKER_HOST=tcp://dockerproxy:2375
+      - RECORD_COMMENT=${RECORD_COMMENT:-managed by traefik-cloudflare-dns}
+      - DELETE_AFTER=${DELETE_AFTER:-1h}
+      # - RECORD_TAGS=${RECORD_TAGS:-}
+      # - PROXIED=${PROXIED:-false}
+      # - TTL=${TTL:-1}
+      # - RESYNC_INTERVAL=${RESYNC_INTERVAL:-1m}
+      # - DRY_RUN=${DRY_RUN:-false}
+      # - LOG_LEVEL=${LOG_LEVEL:-info}
+    depends_on:
+      - dockerproxy
+
+  dockerproxy:
+    image: tecnativa/docker-socket-proxy:latest
+    restart: unless-stopped
+    environment:
+      - CONTAINERS=1
+    security_opt:
+      - no-new-privileges:true
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
