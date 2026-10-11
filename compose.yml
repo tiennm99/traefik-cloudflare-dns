@@ -1,6 +1,6 @@
 services:
   traefik-cloudflare-dns:
-    image: ghcr.io/tiennm99/traefik-cloudflare-dns:edge
+    image: ghcr.io/tiennm99/traefik-cloudflare-dns:1
     restart: unless-stopped
     environment:
       - CF_API_TOKEN=${CF_API_TOKEN:?CF_API_TOKEN is required}
